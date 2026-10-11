@@ -1,4 +1,4 @@
-const CACHE = "hinario-adventista-v2";
+const CACHE = "hinario-adventista-v3";
 const CORE = [
   "./",
   "./index.html",

@@ -11,7 +11,7 @@ const state = {
   favorites: new Set(JSON.parse(localStorage.getItem("hasd-favs") || "[]").map(Number)),
   recent: JSON.parse(localStorage.getItem("hasd-recent") || "[]").map(Number)
 };
-let hymns = [];
+let hymnList = [];
 
 function openDB() {
   return new Promise((resolve, reject) => {
@@ -83,7 +83,7 @@ function setOfflineStatus(message, kind = "") {
 }
 function render() {
   const q = state.query.trim().toLocaleLowerCase("pt-BR");
-  const list = hymns.filter(h => {
+  const list = hymnList.filter(h => {
     const matches = !q || pad(h.id).includes(q) || String(h.id) === q ||
       h.title.toLocaleLowerCase("pt-BR").includes(q) ||
       h.lyrics.toLocaleLowerCase("pt-BR").includes(q);
@@ -102,7 +102,7 @@ function render() {
   document.querySelectorAll(".hymn-card").forEach(b => b.addEventListener("click", () => openHymn(Number(b.dataset.id))));
 }
 function openHymn(id) {
-  const h = hymns.find(x => x.id === id);
+  const h = hymnList.find(x => x.id === id);
   if (!h) return;
   state.current = id;
   state.recent = [id, ...state.recent.filter(x => x !== id)].slice(0, 20);
@@ -121,11 +121,11 @@ function openHymn(id) {
   if (location.hash !== "#h" + pad(id)) history.replaceState(null, "", "#h" + pad(id));
 }
 async function ensureOfflineCopy() {
-  if (!hymns.length) return;
+  if (!hymnList.length) return;
   setOfflineStatus("Preparando as letras para leitura sem internet…", "working");
   try {
-    await storeOffline(hymns);
-    setOfflineStatus(`Modo offline pronto: ${hymns.length} hinos salvos neste dispositivo.`, "ready");
+    await storeOffline(hymnList);
+    setOfflineStatus(`Modo offline pronto: ${hymnList.length} hinos salvos neste dispositivo.`, "ready");
   } catch (err) {
     setOfflineStatus("As letras estão carregadas, mas o navegador não permitiu criar a cópia offline. Use um navegador atualizado e abra o site por HTTPS.", "warning");
   }
@@ -133,20 +133,20 @@ async function ensureOfflineCopy() {
 async function initialize() {
   const fromFile = normalizeHymns(window.hymns);
   if (fromFile.length) {
-    hymns = fromFile;
+    hymnList = fromFile;
     // Salva automaticamente na primeira visita online; também atualiza a cópia local quando há conexão.
     await ensureOfflineCopy();
   } else {
     try {
       const saved = await readOffline();
       if (saved?.hymns?.length) {
-        hymns = saved.hymns;
-        setOfflineStatus(`Sem conexão: ${hymns.length} hinos recuperados do armazenamento local.`, "ready");
+        hymnList = saved.hymns;
+        setOfflineStatus(`Sem conexão: ${hymnList.length} hinos recuperados do armazenamento local.`, "ready");
       }
     } catch (_) {}
   }
-  if (!hymns.length) {
-    hymns = Array.from({ length: 613 }, (_, i) => ({ id: i + 1, title: `Hino ${pad(i + 1)}`, lyrics: "" }));
+  if (!hymnList.length) {
+    hymnList = Array.from({ length: 613 }, (_, i) => ({ id: i + 1, title: `Hino ${pad(i + 1)}`, lyrics: "" }));
     setOfflineStatus("Não foi possível carregar as letras. Conecte-se à internet e recarregue a página.", "warning");
   }
   render();
