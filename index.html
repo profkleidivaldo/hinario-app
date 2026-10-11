@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#263c32"><meta name="description" content="Hinário Adventista — hinos, letras e reprodução de áudio.">
+<link rel="manifest" href="./manifest.webmanifest"><link rel="icon" href="./icons/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="./style.css"><title>Hinário Adventista</title>
+</head>
+<body>
+<header class="topbar">
+  <a class="brand" href="./" aria-label="Início"><span class="brandmark">♫</span><span><b>Hinário</b><small>ADVENTISTA</small></span></a>
+  <div class="head-actions"><button id="installBtn" class="install hidden">Instalar app</button><button id="themeBtn" class="icon-btn" aria-label="Alternar tema">◐</button></div>
+</header>
+<main>
+  <section class="offline-panel" aria-live="polite">
+    <div class="offline-symbol">↧</div>
+    <div class="offline-copy"><strong>Hinário disponível sem internet</strong><p id="offlineStatus" class="offline-status working">Preparando as letras para leitura sem internet…</p></div>
+    <button id="downloadOfflineBtn" class="offline-download" type="button">Salvar letras offline</button>
+  </section>
+  <section class="hero">
+    <div class="eyebrow">HINÁRIO ADVENTISTA DO SÉTIMO DIA</div>
+    <h1>Louvor que <em>inspira.</em></h1>
+    <p>Encontre seu hino, acompanhe a letra e louve em qualquer lugar.</p>
+    <label class="search"><span>⌕</span><input id="search" placeholder="Buscar por número ou título..." autocomplete="off"><kbd>/</kbd></label>
+    <div class="quick"><button data-filter="all" class="chip active">Todos os hinos</button><button data-filter="recent" class="chip">Acessados recentemente</button><button data-filter="favorites" class="chip">♡ Favoritos</button></div>
+  </section>
+  <section class="content">
+    <div class="section-head"><div><span class="eyebrow">COLEÇÃO</span><h2 id="listTitle">Hinos do hinário</h2></div><span id="count" class="count">613 hinos</span></div>
+    <div id="hymnGrid" class="hymn-grid"></div>
+    <div id="empty" class="empty hidden">Nenhum hino encontrado. Tente outro termo.</div>
+  </section>
+  <section id="reader" class="reader hidden" aria-live="polite">
+    <div class="reader-head"><button id="backBtn" class="text-btn">← Voltar à lista</button><button id="favBtn" class="icon-btn" aria-label="Favoritar hino">♡</button></div>
+    <div class="hymn-number" id="readerNumber">HINO 001</div><h2 id="readerTitle">Título do hino</h2>
+    <div class="rule"></div><p id="hymnMeta" class="hymn-meta hidden"></p><article id="lyrics" class="lyrics">A letra do hino será exibida aqui.</article>
+    <div class="reader-nav"><button id="prevBtn" class="nav-btn">← Hino anterior</button><button id="nextBtn" class="nav-btn">Próximo hino →</button></div>
+  </section>
+</main>
+<footer><span>Hinário Adventista</span><span>Letras salvas no dispositivo • Funciona offline após a primeira visita com internet</span></footer>
+<script src="./classes/hymns.js"></script><script src="./app.js"></script>
+</body></html>

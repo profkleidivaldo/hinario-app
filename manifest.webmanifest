@@ -1,0 +1,15 @@
+{
+  "name":"Hinário Adventista",
+  "short_name":"Hinário",
+  "description":"Hinário Adventista do Sétimo Dia — letras e áudio",
+  "lang":"pt-BR",
+  "start_url":"./",
+  "scope":"./",
+  "display":"standalone",
+  "orientation":"portrait-primary",
+  "background_color":"#f4f1e9",
+  "theme_color":"#263c32",
+  "icons":[
+    {"src":"./icons/icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
+  ]
+}
